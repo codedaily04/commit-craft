@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+
+import { Command } from 'commander'
+
+const program = new Command()
+
+program
+  .name('commit-craft')
+  .description('AI-powered git commit messages')
+  .version('0.1.0')
+
+program
+  .command('commit')
+  .description('Generate a commit message from staged changes')
+  .action(() => {
+    console.log('commit command works!')
+  })
+
+program
+  .command('split')
+  .description('Split staged changes into multiple commits')
+  .action(() => {
+    console.log('split command works!')
+  })
+
+program
+  .command('pr')
+  .description('Generate a PR description from commit history')
+  .action(() => {
+    console.log('pr command works!')
+  })
+
+program.parse()

@@ -1,0 +1,29 @@
+{
+  "name": "commit_craft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "bin":{
+    "commit-craft": "./dist/index.js"
+  },
+  "scripts": {
+    "build":"tsc",
+    "dev":"ts-node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "commander": "^15.0.0",
+    "inquirer": "^14.0.2",
+    "simple-git": "^3.36.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.10",
+    "@types/node": "^26.0.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}

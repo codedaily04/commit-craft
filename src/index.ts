@@ -2,7 +2,7 @@
 
 import { Command } from 'commander'
 import { commitCommand } from './commands/commit'
-
+import { splitCommand } from './commands/split'
 
 const program = new Command()
 
@@ -21,8 +21,8 @@ program
 program
   .command('split')
   .description('Split staged changes into multiple commits')
-  .action(() => {
-    console.log('split command works!')
+  .action(async () => {
+    await splitCommand()
   })
 
 program

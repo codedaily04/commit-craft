@@ -4,6 +4,7 @@ import { Command } from 'commander'
 import { commitCommand } from './commands/commit'
 import { splitCommand } from './commands/split'
 import { prCommand } from './commands/pr'
+import { saveConfig } from './config'
 
 const program = new Command()
 
@@ -32,6 +33,19 @@ program
   .option('-b, --base <branch>', 'base branch to compare against', 'main')
   .action(async (options) => {
     await prCommand(options.base)
+  })
+
+program
+  .command('config')
+  .description('Set your API key')
+  .option('-k, --key <apiKey>', 'your Groq API key')
+  .action((options) => {
+    if (options.key) {
+      saveConfig('GROQ_API_KEY', options.key)
+      console.log('✅ API key saved!')
+    } else {
+      console.log('Usage: commit-craft config --key your_api_key')
+    }
   })
 
 program.parse()

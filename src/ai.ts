@@ -1,9 +1,20 @@
 import Groq from 'groq-sdk'
 import 'dotenv/config'
+import { getConfig } from './config'
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY! })
+
+function getGroqClient() {
+  const apiKey = getConfig('GROQ_API_KEY') || process.env.GROQ_API_KEY
+  if (!apiKey) {
+    console.error('No API key found. Run: commit-craft config --key your_api_key')
+    process.exit(1)
+  }
+  return new Groq({ apiKey })
+}
+
 
 export async function generateCommitMessage(diff: string, regenerate: boolean=false): Promise<string> {
+  const groq = getGroqClient()
   const prompt = `
 You are an expert developer. Based on the git diff below, write a commit message 
 following the Conventional Commits format.
@@ -35,6 +46,7 @@ ${diff}
 
 //Making the Split-message feature for commit-craft 
 export async function generateSplitCommits(diff: string): Promise<{ message: string, files: string[] }[]> {
+  const groq = getGroqClient()
   const prompt = `
 You are an expert developer. Analyze the git diff below and split it into logical commits.
 
@@ -74,6 +86,7 @@ ${diff}
 
 // making the PR description generator 
 export async function generatePRDescription(commitLog: string): Promise<string> {
+  const groq = getGroqClient()
   const prompt = `
 You are an expert developer. Based on the commit log below, write a Pull Request 
 title and description in markdown.

@@ -3,20 +3,21 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
-  "bin":{
+  "bin": {
     "commit-craft": "./dist/index.js"
   },
   "scripts": {
-    "build":"tsc",
-    "dev":"ts-node src/index.js"
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@google/generative-ai": "^0.24.1",
+    "@google/genai": "^2.10.0",
     "commander": "^15.0.0",
+    "dotenv": "^17.4.2",
     "inquirer": "^14.0.2",
     "simple-git": "^3.36.0"
   },

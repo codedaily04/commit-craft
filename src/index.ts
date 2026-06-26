@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander'
+import { commitCommand } from './commands/commit'
+
 
 const program = new Command()
 
@@ -12,8 +14,8 @@ program
 program
   .command('commit')
   .description('Generate a commit message from staged changes')
-  .action(() => {
-    console.log('commit command works!')
+  .action(async () => {
+    await commitCommand()
   })
 
 program

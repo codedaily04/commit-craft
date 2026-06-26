@@ -3,6 +3,7 @@
 import { Command } from 'commander'
 import { commitCommand } from './commands/commit'
 import { splitCommand } from './commands/split'
+import { prCommand } from './commands/pr'
 
 const program = new Command()
 
@@ -28,8 +29,9 @@ program
 program
   .command('pr')
   .description('Generate a PR description from commit history')
-  .action(() => {
-    console.log('pr command works!')
+  .option('-b, --base <branch>', 'base branch to compare against', 'main')
+  .action(async (options) => {
+    await prCommand(options.base)
   })
 
 program.parse()

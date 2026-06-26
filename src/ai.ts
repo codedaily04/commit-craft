@@ -71,3 +71,36 @@ ${diff}
     throw new Error('AI returned invalid JSON. Try again.')
   }
 }
+
+// making the PR description generator 
+export async function generatePRDescription(commitLog: string): Promise<string> {
+  const prompt = `
+You are an expert developer. Based on the commit log below, write a Pull Request 
+title and description in markdown.
+
+Rules:
+- First line is the PR title (short, clear, max 72 characters)
+- Then a blank line
+- Then a markdown body with these sections:
+  ## What changed
+  ## Why
+  ## How to test
+- Be concise and professional
+- Only return the markdown, nothing else
+
+Commit log:
+${commitLog}
+`
+
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages: [{ role: 'user', content: prompt }],
+  })
+
+  const content = response.choices[0]?.message?.content
+  if (!content) {
+    throw new Error('No content returned from Groq API')
+  }
+
+  return content.trim()
+}

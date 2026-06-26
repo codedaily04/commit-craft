@@ -3,7 +3,7 @@ import 'dotenv/config'
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY! })
 
-export async function generateCommitMessage(diff: string): Promise<string> {
+export async function generateCommitMessage(diff: string, regenerate: boolean=false): Promise<string> {
   const prompt = `
 You are an expert developer. Based on the git diff below, write a commit message 
 following the Conventional Commits format.
@@ -14,7 +14,7 @@ Rules:
 - First line max 72 characters
 - Be specific and clear
 - Only return the commit message, nothing else
-
+${regenerate ? '- This is a regeneration attempt, provide a different alternative message than what was previously suggested' : ''}
 Git diff:
 ${diff}
 `

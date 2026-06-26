@@ -23,7 +23,7 @@ export async function commitCommand() {
 
     const { action } = await inquirer.prompt([
       {
-        type: 'list',
+        type: 'select',
         name: 'action',
         message: 'What do you want to do?',
         choices: ['Accept', 'Edit', 'Regenerate', 'Bail'],

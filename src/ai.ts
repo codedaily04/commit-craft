@@ -1,6 +1,7 @@
-import { GoogleGenAI } from '@google/genai'
+import Groq from 'groq-sdk'
+import 'dotenv/config'
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! })
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY! })
 
 export async function generateCommitMessage(diff: string): Promise<string> {
   const prompt = `
@@ -18,10 +19,15 @@ Git diff:
 ${diff}
 `
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
-    contents: prompt,
+  const response = await groq.chat.completions.create({
+    model: 'llama-3.3-70b-versatile',
+    messages: [{ role: 'user', content: prompt }],
   })
 
-  return response.text!.trim()
+  const content = response.choices[0]?.message?.content
+  if (!content) {
+    throw new Error('No content returned from Groq API')
+  }
+
+  return content.trim()
 }

@@ -31,11 +31,28 @@ export async function commitCommand() {
       },
     ])
 
-    if (action === 'Accept') {
-      await git.commit(message)
-      console.log(' Committed! ')
-      break
-    }
+   if (action === 'Accept') {
+  await git.commit(message)
+  console.log('✅ Committed!')
+
+  const { shouldPush } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'shouldPush',
+      message: 'Do you want to push now?',
+      default: false,
+    },
+  ])
+
+  if (shouldPush) {
+    process.stdout.write('Pushing...')
+    await git.push()
+    process.stdout.write(' done!\n')
+    console.log('✅ Pushed to remote!')
+  }
+
+  break
+}
 
     if (action === 'Edit') {
       const { edited } = await inquirer.prompt([

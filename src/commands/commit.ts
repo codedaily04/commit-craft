@@ -33,7 +33,7 @@ export async function commitCommand() {
 
    if (action === 'Accept') {
   await git.commit(message)
-  console.log('✅ Committed!')
+  console.log('Committed!')
 
   const { shouldPush } = await inquirer.prompt([
     {
@@ -48,9 +48,8 @@ export async function commitCommand() {
     process.stdout.write('Pushing...')
     await git.push()
     process.stdout.write(' done!\n')
-    console.log('✅ Pushed to remote!')
+    console.log('Pushed to remote!')
   }
-
   break
 }
 

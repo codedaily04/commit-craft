@@ -1,6 +1,10 @@
 import 'dotenv/config'
+import inquirer from 'inquirer'
+import simpleGit from 'simple-git'
 import { getStagedDiff } from '../git'
 import { generateCommitMessage } from '../ai'
+
+const git=simpleGit();
 
 export async function commitCommand() {
   const diff = await getStagedDiff()
@@ -11,8 +15,47 @@ export async function commitCommand() {
   }
 
   console.log('Generating commit message...')
-  const message = await generateCommitMessage(diff)
+  let message = await generateCommitMessage(diff)
 
-  console.log('\nSuggested commit message:')
-  console.log(`\n  ${message}\n`)
+  while(true){
+    console.log('\nSuggested commit message:')
+    console.log(`\n  ${message}\n`)
+
+    const { action } = await inquirer.prompt([
+      {
+        type: 'list',
+        name: 'action',
+        message: 'What do you want to do?',
+        choices: ['Accept', 'Edit', 'Regenerate', 'Bail'],
+      },
+    ])
+
+    if (action === 'Accept') {
+      await git.commit(message)
+      console.log(' Committed! ')
+      break
+    }
+
+    if (action === 'Edit') {
+      const { edited } = await inquirer.prompt([
+        {
+          type: 'input',
+          name: 'edited',
+          message: 'Edit the message:',
+          default: message,
+        },
+      ])
+      message = edited
+    }
+
+    if (action === 'Regenerate') {
+      console.log('Regenerating...')
+      message = await generateCommitMessage(diff)
+    }
+    
+    if(action==='Bail'){
+        console.log('Abort commit')
+        process.exit(0)
+    }
+  }
 }

@@ -14,8 +14,9 @@ export async function commitCommand() {
     return
   }
 
-  console.log('Generating commit message...')
+  process.stdout.write('Generating commit message...')
   let message = await generateCommitMessage(diff)
+  process.stdout.write('\r')
 
   while(true){
     console.log('\nSuggested commit message:')

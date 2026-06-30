@@ -133,7 +133,7 @@ All generated messages follow the [Conventional Commits](https://www.conventiona
 ## Powered by
 
 - [Groq](https://groq.com) — fast, free LLM inference
-- [Llama 3.3 70B](https://groq.com) — the model used for generation
+- [qwen/qwen3.6-27b](https://groq.com) — the model used for generation
 
 ---
 

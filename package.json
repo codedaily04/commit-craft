@@ -1,10 +1,10 @@
 {
-  "name": "commit-craft",
+  "name": "@lukewarm/commit-craft",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "commit-craft": "./dist/index.js"
+    "commit-craft": "dist/index.js"
   },
   "scripts": {
     "build": "tsc",

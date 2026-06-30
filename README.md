@@ -1,4 +1,4 @@
-# commit-craft
+# commit-craft-cli
 
 AI-powered git commit messages, right from your terminal.
 
@@ -18,7 +18,7 @@ Stage your changes, run `commit-craft commit`, and get a [Conventional Commits](
 ## Installation
 
 ```bash
-npm install -g commit_craft
+npm install -g @lukewarm/commit-craft
 ```
 
 ---

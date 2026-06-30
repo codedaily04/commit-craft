@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import inquirer from 'inquirer'
 import simpleGit from 'simple-git'
 import { getStagedDiff } from '../git'

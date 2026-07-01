@@ -2,6 +2,7 @@ import Groq from 'groq-sdk'
 import 'dotenv/config'
 import { getConfig } from './config'
 
+const DEFAULT_MODEL = 'qwen/qwen3.6-27b'
 
 function getGroqClient() {
   const apiKey = getConfig('GROQ_API_KEY') || process.env.GROQ_API_KEY
@@ -10,6 +11,16 @@ function getGroqClient() {
     process.exit(1)
   }
   return new Groq({ apiKey })
+}
+
+function getModel(): string {
+  return getConfig('MODEL') || DEFAULT_MODEL
+}
+
+export async function listGroqModels(): Promise<{ id: string }[]> {
+  const groq = getGroqClient()
+  const response = await groq.models.list()
+  return response.data
 }
 
 
@@ -31,7 +42,7 @@ ${diff}
 `
 
   const response = await groq.chat.completions.create({
-    model: 'qwen/qwen3.6-27b',
+    model: getModel(),
     messages: [{ role: 'user', content: prompt }],
   })
 
@@ -68,7 +79,7 @@ ${diff}
 `
 
   const response = await groq.chat.completions.create({
-    model: 'qwen/qwen3.6-27b',
+    model: getModel(),
     messages: [{ role: 'user', content: prompt }],
   })
 
@@ -106,7 +117,7 @@ ${commitLog}
 `
 
   const response = await groq.chat.completions.create({
-    model: 'qwen/qwen3.6-27b',
+    model: getModel(),
     messages: [{ role: 'user', content: prompt }],
   })
 
